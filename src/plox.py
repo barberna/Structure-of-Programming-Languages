@@ -1,29 +1,25 @@
 import sys
 from pathlib import Path
+from scanner import Scanner
 
-"""
-When we call run coil.py, we enter REPL Mode where we echo the input
-And then send "Scanner Not Implemented" and allow the user to keep inputing inill
-CTR+C
-"""
-"""
-We then run coil.py fallowd by another files name then we execute
-the code and ehco it, then return "Scanner Not Implemented"
-"""
 
-class Lox:
+class PLox:
     def __init__(self):
         self.had_error = False
 
-    def error(self, line, column, message):
-        print(f"[Line: {line}, column {column}] Error: {message}", file=sys.stderr)
+    def error(self, line, message):
+        print(f"[Line: {line}] Error: {message}", file=sys.stderr)
         self.had_error = True
 
     def run(self, source):
         # Source: AI
         print(source, end="" if source.endswith("\n") else "\n", flush=True)
-        # End Source
-        self.error(1, 1, "Scanner Not Implemented")
+
+        scanner = Scanner(source, self)
+        tokens = scanner.scan_tokens()
+
+        for token in tokens:
+            print(token)
 
     def run_file(self, filename):
         try:
@@ -42,7 +38,7 @@ class Lox:
             while True:
                 source = input(">")
                 self.run(source)
-                self.has_error = False
+                self.had_error = False
         except (KeyboardInterrupt, EOFError):
             print()
         return
@@ -59,7 +55,7 @@ def main(argv=None):
         print('Usage: python src/lox.py [script.lox]')
         return 64
 
-    interpretor = Lox()
+    interpretor = PLox()
     if args:
         return interpretor.run_file(args[0])
     return interpretor.run_prompt()
