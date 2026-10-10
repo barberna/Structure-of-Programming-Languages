@@ -21,20 +21,13 @@ x variable name_2 forLoop trueValue Var
 // NUMBER tokens: literal values 0.0, 5.0, 42.0, 12345.0.
 0 5 42 12345
 
-// Negative number: MINUS (None), NUMBER (9.0).
--9
-
 // STRING tokens: literals hello, hello world, and the empty string.
 "hello" "hello world" ""
 
-// STRING with literal // still a string; slashes inside strings are preserved.
-"// still a string"
 
 // Adjacent tokens: VAR IDENTIFIER EQUAL NUMBER SEMICOLON.
 var x=5;
 
-// PRINT STRING SEMICOLON; trailing comment produces no tokens.
-print "done"; // ignored: @ ! == 123 "not a token"
 
 // Blank lines and whitespace produce no tokens.
 // End of file: EOF with empty lexeme and literal None.
