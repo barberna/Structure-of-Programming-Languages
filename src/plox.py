@@ -1,6 +1,8 @@
 import sys
 from pathlib import Path
 from scanner import Scanner
+from parser import Parser
+from ast_printer import AstPrinter
 
 
 class PLox:
@@ -12,14 +14,26 @@ class PLox:
         self.had_error = True
 
     def run(self, source):
-        # Source: AI
+        self.had_error = False
+
+        # Start AI Code
         print(source, end="" if source.endswith("\n") else "\n", flush=True)
+        # End AI Code
 
         scanner = Scanner(source, self)
         tokens = scanner.scan_tokens()
 
-        for token in tokens:
-            print(token)
+        if self.had_error:
+            return
+
+        parser = Parser(tokens, self)
+        expression = parser.parse()
+
+        if self.had_error:
+            return
+
+        printer = AstPrinter()
+        print(printer.print(expression))
 
     def run_file(self, filename):
         try:

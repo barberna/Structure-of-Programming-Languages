@@ -69,7 +69,7 @@ def test3():
     return(result)
 
 # Testing, bianry, literal(true), operator(!=, ==), Grouping.
-# "Testing" != "Test"
+# ()"Testing" != "Test") == True
 def test4():
     printer = AstPrinter()
 
