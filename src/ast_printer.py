@@ -28,17 +28,3 @@ class AstPrinter:
                 return f"(group {group})"
 
 
-if __name__ == "__main__":
-    printer = AstPrinter()
-    minus = Token(TokenType.MINUS, "-", None, 1)
-    expression = Binary(Literal(10), minus, Literal(12))
-    grouping = Grouping(expression)
-
-    operator = Token(TokenType.GREATER, ">", None, 1)
-
-    test_expression = Literal(25)
-
-    test = Binary(grouping, operator, test_expression)
-
-    result = printer.print(test)
-    print(result)

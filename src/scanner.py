@@ -129,6 +129,9 @@ class Scanner:
             case '>': self.add_token(TokenType.GREATER_EQUAL if self.match('=') else TokenType.GREATER)
             case '<': self.add_token(TokenType.LESS_EQUAL if self.match('=') else TokenType.LESS)
 
+            # Print Token
+            case 'print': self.add_token(TokenType.PRINT)
+
             # Literals
             case '"': self.string()
             case _ if '0' <= c <= '9': self.number()
@@ -160,5 +163,3 @@ class Scanner:
 
         self.tokens.append(Token(TokenType.EOF, "", None, self.line))
         return self.tokens
-
-    

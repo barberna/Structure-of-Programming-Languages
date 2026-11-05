@@ -1,8 +1,9 @@
 import sys
 from pathlib import Path
 from scanner import Scanner
-from parser import Parser
+from program_parser import ProgramParser
 from ast_printer import AstPrinter
+from evaluator import Evaluator, EvaluationError
 
 
 class PLox:
@@ -26,14 +27,20 @@ class PLox:
         if self.had_error:
             return
 
-        parser = Parser(tokens, self)
-        expression = parser.parse()
+        parser = ProgramParser(tokens, self)
+        statements = parser.parse()
 
-        if self.had_error:
+        try:
+            evaluator = Evaluator()
+            for statement in statements:
+                evaluator.execute(statement)
+        except EvaluationError as error:
+            self.error(error.token.line, str(error))
             return
 
-        printer = AstPrinter()
-        print(printer.print(expression))
+
+
+        
 
     def run_file(self, filename):
         try:
